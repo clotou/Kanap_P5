@@ -71,19 +71,45 @@ function click(product) {
         let data = {
           color: selectedColor,
           id: id,
-          name: product.name,
-          price: product.price,
-          imageUrl: product.imageUrl,
-          description: product.description,
-          altTxt: product.altText
+          quantity: selectedQuantity
         };
-console.log(data);
-      };
+  console.log(data);
+      //init du localStorage
 
-    let purchaseStorage = JSON.parse(localStorage.getItem('item'));
-    // window.location.href = 'cart.html';
-    // purchaseStorage.push(data);
-    // localStorage.setItem('item', JSON.stringify(purchaseStorage));
+      let purchaseStorage = JSON.parse(localStorage.getItem('produit'));
+
+      if (purchaseStorage) {
+        const productExist = purchaseStorage.find(
+          (product) => product.id === id && product.color === selectColor
+        );
+        if (productExist) {
+          //Si on a déjà exactement le même produit
+          let totalQuantity =
+            parseInt(data.quantity) + parseInt(productExist.quantity);
+          productExist.quantity = totalQuantity;
+          localStorage.setItem('produit', JSON.stringify(purchaseStorage));
+          alert(
+          `Vous avez bien ajouté le canapé ${product.name} dans le colori ${selectedColor}, quantité, ${selectedQuantity} dans votre panier`
+        );
+        } else {
+          //Sinon (produit different de ceux deja commandé)
+
+          purchaseStorage.push(data);
+          localStorage.setItem('produit', JSON.stringify(purchaseStorage));
+          alert(
+          `Vous avez bien ajouté le canapé ${product.name} dans le colori ${selectedColor}, quantité, ${selectedQuantity} dans votre panier`
+        );
+        }
+      } else {
+        //s'il n'y a rien dans le panier création array
+        purchaseStorage = [];
+        //On push les informations du localStorage dans le array
+        purchaseStorage.push(data);
+        localStorage.setItem('produit', JSON.stringify(purchaseStorage));
+        alert(
+          `Vous avez bien ajouté le canapé ${product.name} dans le colori ${selectedColor}, quantité, ${selectedQuantity} dans votre panier`
+        );
+      }
+    }
   });
 }
-
