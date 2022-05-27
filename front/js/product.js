@@ -1,7 +1,7 @@
 //récupérer l'id de l'élément affiché sur la page
-var str = window.location.href;
-var url = new URL(str);
-var id = url.searchParams.get("id");
+const str = window.location.href;
+const url = new URL(str);
+const id = url.searchParams.get("id");
 
 
 fetch(`http://localhost:3000/api/products/${id}`)
@@ -10,41 +10,80 @@ fetch(`http://localhost:3000/api/products/${id}`)
       return res.json();
     }
   })
-  .then(function(item) {
-    return setProduct(item);
+  .then(function(product) {
+    return setProduct(product);
   })
   .catch(function(err) {
     console.log("Il y a un trou dans le canap'.");
 });
 
-function setProduct(item) {
+function setProduct(product) {
 // on créé le tag image et on insère l'image
   let productPicture = document.createElement('img');
   document.querySelector('.item__img').appendChild(productPicture);
-  productPicture.src = item.imageUrl;
-  productPicture.alt = item.altTxt;
+  productPicture.src = product.imageUrl;
+  productPicture.alt = product.altTxt;
 
 // on insère le titre dans le h1
   let title = document.getElementById('title');
-  title.textContent = item.name
+  title.textContent = product.name
 
 // on insère le prix dans le span
   let price = document.getElementById('price');
-  price.textContent = item.price;
+  price.textContent = product.price;
 
 // on insère la description dans le p
   let description = document.getElementById('description');
-  description.textContent = item.description
+  description.textContent = product.description
 
 // on crée des tag radio pour insérer les choix de couleur
   let target = document.getElementById('colors');
-  let nbrOfChoice = item.colors.length;
+  let nbrOfChoice = product.colors.length;
 
     for (i=0 ; i < nbrOfChoice; i++) {
       let  optTag = document.createElement('option');
       target.appendChild(optTag);
-      optTag.value = item.colors[i]
-      optTag.textContent = item.colors[i];
+      optTag.value = product.colors[i]
+      optTag.textContent = product.colors[i];
 
     }
+    click(product);
 };
+
+let product = '';
+
+const colorChoice = document.getElementById('colors');
+const quantityChoice = document.getElementById('quantity');
+
+function click(product) {
+  document
+    .getElementById('addToCart')
+    .addEventListener('click', function(e) {
+      let selectedColor = colorChoice.value;
+      let selectedQuantity = quantityChoice.value;
+
+      if (selectedColor == null || selectedColor == ''){
+        alert ('Veuillez sélectionner une couleur parmis les choix proposés');
+      };
+      if (selectedQuantity == 0 || selectedQuantity > 100) {
+        alert ('Veuillez sélectionner une quantité entre 0 et 100')
+      } else {
+        let data = {
+          color: selectedColor,
+          id: id,
+          name: product.name,
+          price: product.price,
+          imageUrl: product.imageUrl,
+          description: product.description,
+          altTxt: product.altText
+        };
+console.log(data);
+      };
+
+    let purchaseStorage = JSON.parse(localStorage.getItem('item'));
+    // window.location.href = 'cart.html';
+    // purchaseStorage.push(data);
+    // localStorage.setItem('item', JSON.stringify(purchaseStorage));
+  });
+}
+
