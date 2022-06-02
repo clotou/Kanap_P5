@@ -71,7 +71,11 @@ function click(product) {
         let data = {
           color: selectedColor,
           id: id,
-          quantity: selectedQuantity
+          quantity: selectedQuantity,
+          imageUrl: product.imageUrl,
+          imgAlt: product.altTxt,
+          name: product.name,
+          price: product.price
         };
   console.log(data);
       //init du localStorage
@@ -86,18 +90,18 @@ function click(product) {
           //Si on a déjà exactement le même produit
           let totalQuantity =
             parseInt(data.quantity) + parseInt(productExist.quantity);
+            // On additionne la quantite au produit existant
           productExist.quantity = totalQuantity;
           localStorage.setItem('produit', JSON.stringify(purchaseStorage));
           alert(
-          `Vous avez bien ajouté le canapé ${product.name} dans le colori ${selectedColor}, quantité, ${selectedQuantity} dans votre panier`
+          `Vous avez bien ajouté ${selectedQuantity} ${product.name} dans le colori ${selectedColor} dans votre panier`
         );
         } else {
-          //Sinon (produit different de ceux deja commandé)
-
+          //Sinon, on a joute ce produit au panier
           purchaseStorage.push(data);
           localStorage.setItem('produit', JSON.stringify(purchaseStorage));
           alert(
-          `Vous avez bien ajouté le canapé ${product.name} dans le colori ${selectedColor}, quantité, ${selectedQuantity} dans votre panier`
+           `Vous avez bien ajouté ${selectedQuantity} ${product.name} dans le colori ${selectedColor} dans votre panier`
         );
         }
       } else {
@@ -107,7 +111,7 @@ function click(product) {
         purchaseStorage.push(data);
         localStorage.setItem('produit', JSON.stringify(purchaseStorage));
         alert(
-          `Vous avez bien ajouté le canapé ${product.name} dans le colori ${selectedColor}, quantité, ${selectedQuantity} dans votre panier`
+           `Vous avez bien ajouté ${selectedQuantity} ${product.name} dans le colori ${selectedColor} dans votre panier`
         );
       }
     }
