@@ -84,7 +84,7 @@ function click(product) {
 
       if (purchaseStorage) {
         const productExist = purchaseStorage.find(
-          (product) => product.id === id && product.color === selectColor
+          (product) => product.id === id && product.color === selectedColor
         );
         if (productExist) {
           //Si on a déjà exactement le même produit
@@ -117,3 +117,4 @@ function click(product) {
     }
   });
 }
+
