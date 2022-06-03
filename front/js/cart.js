@@ -92,14 +92,29 @@ if (purchaseStorage == null) {
     pDelete.classList.add('deleteItem');
     pDelete.textContent = "Supprimer";
   }
+  totalItem ();
 }
 
-function totalItem() {
-  //on récupère la quantité d'item
-  let totalQuant = document.getElementsByClassName('itemQuantity');
-  let sumQuant = 0
-   for (let i = 0; i < totalQuant; i++) {
-     sumQuant += totalQuant[i]
-   }
-console.log(sumQuant);
+
+function totalItem () {
+  //on récupère la quatité de l'item
+  let divQuant = document.getElementsByClassName('itemQuantity');
+  let divPrix = document.getElementsByClassName('cart__item__content__description');
+  let sumQuant = 0;
+  let sumPrix = 0;
+  let sumSubTotalPrix = 0;
+  let sumTotalPrix = 0
+  let totalQuant = 0
+  for (let i = 0; i < divQuant.length; i++) {
+    sumQuant = parseInt(divQuant[i].value)
+    sumPrix = divPrix[i].children[2].textContent.split(' ')[0];
+    sumSubTotalPrix = sumQuant * sumPrix;
+    sumTotalPrix += sumSubTotalPrix;
+    totalQuant += sumQuant;
+  }
+  //on affiche la quantite
+  document.getElementById('totalQuantity').textContent = totalQuant;
+
+  //on affiche le prix total
+  document.getElementById('totalPrice').textContent = sumTotalPrix;
 }
