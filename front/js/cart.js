@@ -33,9 +33,7 @@ if (purchaseStorage == null) {
 
     // creation + affichage de la div descriptive globale
     let descriptionDiv = document.createElement('div');
-    document
-      .getElementById('cart__items')
-      .appendChild(descriptionDiv);
+    article.appendChild(descriptionDiv);
     descriptionDiv.classList.add('cart__item__content');
 
     // creation + affichage de la div contenant la description
