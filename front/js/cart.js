@@ -1,6 +1,5 @@
 //on recupère les données du localStorage
 let purchaseStorage = JSON.parse(localStorage.getItem('produit'));
-let product = '';
 
 for (let p in purchaseStorage){
   // creation + affichage de l'article
