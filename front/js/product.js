@@ -75,7 +75,7 @@ function click(product) {
           imageUrl: product.imageUrl,
           imgAlt: product.altTxt,
           name: product.name,
-          price: product.price
+          // price: product.price
         };
   console.log(data);
       //init du localStorage
@@ -103,6 +103,7 @@ function click(product) {
           alert(
            `Vous avez bien ajouté ${selectedQuantity} ${product.name} dans le colori ${selectedColor} dans votre panier`
         );
+        window.location.href = 'index.html';
         }
       } else {
         //s'il n'y a rien dans le panier création array
@@ -113,6 +114,7 @@ function click(product) {
         alert(
            `Vous avez bien ajouté ${selectedQuantity} ${product.name} dans le colori ${selectedColor} dans votre panier`
         );
+        window.location.href = 'index.html';
       }
     }
   });
