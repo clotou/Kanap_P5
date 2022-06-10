@@ -19,6 +19,7 @@ fetch('http://localhost:3000/api/products')
     }
     getItem();
     totalItem();
+    getForm();
   })
   .catch(function(err) {
     console.log("Il y a un trou dans le canap'.");
@@ -171,4 +172,63 @@ function totalItem () {
 
   //on affiche le prix total
   document.getElementById('totalPrice').textContent = sumTotalPrix;
+}
+
+// FORMULAIRE----------------
+//validateurs regex
+let nameRegex = new RegExp("/^[a-z ,.'-]+$/i");
+let addressRegex = new RegExp('^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+');
+let emailRegex = new RegExp('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$');
+
+function getForm(){
+
+//on récupère et testons la validité du prénoms
+  let firstName = document.getElementById('firstName');
+  firstName.addEventListener('change', function() {
+    if(nameRegex.test(firstName.value) === false) {
+      document.getElementById('firstNameErrorMsg').textContent = 'Le format du prénom est incorrect, veuillez le saisir à nouveau.'
+    } else {
+      document.getElementById('firstNameErrorMsg').textContent = '';
+    }
+  });
+
+  //on récupère et testons la validité du nom
+  let lastName = document.getElementById('lastName');
+  lastName.addEventListener('change', function () {
+    if (nameRegex.test(lastName.value) === false) {
+      document.getElementById('lastNameErrorMsg').textContent = 'Le format du nom est incorrect, veuillez le saisir à nouveau.'
+    } else {
+      document.getElementById('lastNameErrorMsg').textContent = '';
+    }
+  });
+
+  //on récupère et testons la validité de l'adresse
+  let address = document.getElementById('address');
+  address.addEventListener('change', function(){
+    if (addressRegex.test(address.value) === false) {
+      document.getElementById('addressErrorMsg').textContent = "Le format de l'adresse est incorrect, veuillez la saisir à nouveau."
+    } else {
+      document.getElementById('addressErrorMsg').textContent = '';
+    }
+  });
+
+  //on récupère et testons la validité de la ville
+  let  city = document.getElementById('city');
+  city.addEventListener('change', function() {
+      if (nameRegex.test(city.value) === false) {
+        document.getElementById('cityErrorMsg').textContent = "Le format de la ville est incorrect, veuillez la saisir à nouveau."
+      } else {
+        document.getElementById('cityErrorMsg').textContent = '';
+      }
+  });
+
+//on récupère et testons la validité de l'email
+let email = document.getElementById('email');
+email.addEventListener('change', function() {
+  if (emailRegex.test(email.value) === false) {
+    document.getElementById('emailErrorMsg').textContent = "Le format de l'email est incorrect, veuillez le saisir à nouveau."
+  } else {
+    document.getElementById('emailErrorMsg').textContent = '';
+  }
+});
 }
