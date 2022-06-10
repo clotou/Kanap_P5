@@ -176,7 +176,7 @@ function totalItem () {
 
 // FORMULAIRE----------------
 //validateurs regex
-let nameRegex = new RegExp("/^[a-z ,.'-]+$/i");
+let nameRegex = new RegExp("^[a-zA-Zàâäéèêëïîôöùûüç ,.'-]+$");
 let addressRegex = new RegExp('^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+');
 let emailRegex = new RegExp('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$');
 
