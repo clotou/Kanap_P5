@@ -255,7 +255,7 @@ function postForm() {
     alert( "Votre panier est vide, veuillez selectionner un article pour commander.");
   } else {
     for (let i=0; i < purchaseStorage.length; i++) {
-      products.push(purchaseStorage[i]);
+      products.push(purchaseStorage[i].id);
     }
   }
   const sendData = {
@@ -283,6 +283,5 @@ function postForm() {
     // localStorage.setItem('orderId', data.orderId);
     document.location.href = 'confirmation.html?id='+ data.orderId;
   })
-  window.location.href = 'confirmation.html'
 });
 }

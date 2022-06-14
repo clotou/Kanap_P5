@@ -98,7 +98,7 @@ function click(product) {
         );
         window.location.href = 'index.html';
         } else {
-          //Sinon, on a joute ce produit au panier
+          //Sinon, on ajoute ce produit au panier
           purchaseStorage.push(data);
           localStorage.setItem('produit', JSON.stringify(purchaseStorage));
           alert(
