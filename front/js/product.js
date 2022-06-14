@@ -96,6 +96,7 @@ function click(product) {
           alert(
           `Vous avez bien ajouté ${selectedQuantity} ${product.name} dans le colori ${selectedColor} dans votre panier`
         );
+        window.location.href = 'index.html';
         } else {
           //Sinon, on a joute ce produit au panier
           purchaseStorage.push(data);

@@ -20,6 +20,7 @@ fetch('http://localhost:3000/api/products')
     getItem();
     totalItem();
     getForm();
+    postForm();
   })
   .catch(function(err) {
     console.log("Il y a un trou dans le canap'.");
@@ -178,7 +179,7 @@ function totalItem () {
 //validateurs regex
 let nameRegex = new RegExp("^[a-zA-Zàâäéèêëïîôöùûüç ,.'-]+$");
 let addressRegex = new RegExp('^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+');
-let emailRegex = new RegExp('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$');
+let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
 
 function getForm(){
 
@@ -222,13 +223,66 @@ function getForm(){
       }
   });
 
-//on récupère et testons la validité de l'email
+  //on récupère et testons la validité de l'email
 let email = document.getElementById('email');
 email.addEventListener('change', function() {
-  if (emailRegex.test(email.value) === false) {
+  if(emailRegex.test(email.value) === false) {
     document.getElementById('emailErrorMsg').textContent = "Le format de l'email est incorrect, veuillez le saisir à nouveau."
   } else {
     document.getElementById('emailErrorMsg').textContent = '';
   }
+});
+}
+
+
+// on post les données du formulaire
+function postForm() {
+  const order = document.getElementById('order');
+  order.addEventListener('click', function(e) {
+    e.preventDefault();
+//on récupère les données saisies et conformes
+  const contact = {
+    firstName : document.getElementById('firstName').value,
+    lastName : document.getElementById('lastName').value,
+    address : document.getElementById('address').value,
+    city : document.getElementById('city').value,
+    email : document.getElementById('email').value
+  }
+
+  let products = [];
+
+  if(!purchaseStorage) {
+    alert( "Votre panier est vide, veuillez selectionner un article pour commander.");
+  } else {
+    for (let i=0; i < purchaseStorage.length; i++) {
+      products.push(purchaseStorage[i]);
+    }
+  }
+  const sendData = {
+    contact,
+    products
+  }
+
+
+  // on envoie les données du panier et du formulaire au serveur
+  fetch('http://localhost:3000/api/products/order', {
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(sendData)
+  })
+  .then(function(res) {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .then(function (data) {
+    const orderId = data.orderId;
+    // localStorage.setItem('orderId', data.orderId);
+    document.location.href = 'confirmation.html?id='+ data.orderId;
+  })
+  window.location.href = 'confirmation.html'
 });
 }
